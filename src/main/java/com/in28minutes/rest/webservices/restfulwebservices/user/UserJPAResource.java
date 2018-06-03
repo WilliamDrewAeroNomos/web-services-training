@@ -27,15 +27,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 /**
  * 
  * @author <a href=mailto:support@aeronomos.org>aeronomos</a>
- *
- *         $Id: $
  * 
+ *         Please document me!!
  */
 @RestController
 public class UserJPAResource {
-
-	@Autowired
-	private UserDaoService service;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -75,11 +71,7 @@ public class UserJPAResource {
 
 	@DeleteMapping("/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-
-		User user = service.deleteById(id);
-		if (user == null) {
-			throw new UserNotFoundException("id = " + id);
-		}
+		userRepository.deleteById(id);
 	}
 
 	/**
@@ -90,7 +82,7 @@ public class UserJPAResource {
 	 */
 	@PostMapping("/jpa/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-		User newUser = service.save(user);
+		User newUser = userRepository.save(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/{id}").buildAndExpand(newUser.getId()).toUri();
 		return ResponseEntity.created(location).build();
