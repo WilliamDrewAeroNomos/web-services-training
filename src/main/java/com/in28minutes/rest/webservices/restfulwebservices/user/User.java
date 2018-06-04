@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 
  */
-@ApiModel(description = "Users of the systems")
+@ApiModel(description = "User of the system.")
 @Entity
 public class User {
 

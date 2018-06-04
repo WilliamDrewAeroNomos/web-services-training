@@ -36,6 +36,9 @@ public class UserJPAResource {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	PostRepository postRepository;
+
 	/**
 	 * Gets all users.
 	 * 
@@ -85,6 +88,33 @@ public class UserJPAResource {
 		User newUser = userRepository.save(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/{id}").buildAndExpand(newUser.getId()).toUri();
+		return ResponseEntity.created(location).build();
+	}
+
+	/**
+	 * Create a new post for a User.
+	 * 
+	 * @param id
+	 *          User id creating the post.
+	 * @param post
+	 *          Content of the Post to be created.
+	 * @return Post created with URI mapping.
+	 */
+	@PostMapping("/jpa/users/{id}/posts")
+	public ResponseEntity<Object> createPost(@PathVariable int id,
+			@RequestBody Post post) {
+		Optional<User> userOptional = userRepository.findById(id);
+		if (!userOptional.isPresent()) {
+			throw new UserNotFoundException("id = " + id);
+		}
+		User user = userOptional.get();
+
+		post.setUser(user);
+
+		postRepository.save(post);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(post.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 

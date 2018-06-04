@@ -11,11 +11,14 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * @author <a href=mailto:support@aeronomos.org>aeronomos</a>
  * 
  *         Please document me!!
  */
+@ApiModel(description = "Post created by a user.")
 @Entity
 public class Post {
 
