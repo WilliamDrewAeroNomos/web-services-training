@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -91,4 +92,5 @@ public class UserResource {
 				.path("/{id}").buildAndExpand(newUser.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
+
 }
